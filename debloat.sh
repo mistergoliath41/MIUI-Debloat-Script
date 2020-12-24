@@ -32,12 +32,14 @@ uninstall=(
 
 for app in "${disable[@]}"
 do
-	pm disable-user --user 0 $app || true
+	echo "Disabling app ${app}..."
+	pm disable-user --user 0 $app >> /dev/null || echo 'The app '$app' is not installed.'
 done
 
 for app in "${uninstall[@]}"
 do
-	pm uninstall $app || pm uninstall -k --user 0 $app || true
+	echo "Uninstalling app ${app}..."
+	pm uninstall $app > /dev/null || pm uninstall -k --user 0 $app > /dev/null || echo 'The app '$app' is not installed.'
 done
 
 reboot
